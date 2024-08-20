@@ -1,0 +1,12 @@
+{% extends 'template.html' %}
+{% block content %}
+    <h1>Editar Tarefa</h1>
+    <form action="{{ url_for('edit_tarefa', tarefa_id=tarefa.id) }}" method="post">
+    <label for="descricao">Descrição:</label>
+    <input type="text" id="descricao" name="descricao" value="{{ tarefa.descricao }}" required>
+    <label for="data_vencimento">Data de Vencimento:</label>
+    <input type="date" id="data_vencimento" name="data_vencimento" value="{{ tarefa.data_vencimento }}">
+    <button type="submit">Salvar</button>
+    </form>
+
+{% endblock %}

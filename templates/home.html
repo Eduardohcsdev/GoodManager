@@ -1,0 +1,93 @@
+{% extends 'template.html' %}
+{% block content %}
+
+    <!-- Formulário para adicionar nova tarefa -->
+    <form action="{{ url_for('add_tarefa') }}" method="post">
+        <input type="text" name="descricao" placeholder="Descrição" required>
+        <input type="date" name="data_vencimento" placeholder="dd/mm/yy" required>
+        <button type="submit">Adicionar</button>
+    </form>
+
+    <h1>Mural de Tarefas</h1>
+    <div class="board">
+        <div class="column" id="a_fazer" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="column-title">A Fazer</div>
+                <div class="dropzone">
+                    {% for tarefa in tarefas if tarefa.status == 'a_fazer' %}
+{#                            <div class="task" draggable="true" ondragstart="drag(event)" id="task-{{ tarefa.id }}">#}
+{#                                {{ tarefa.descricao }} - Para {{ tarefa.data_vencimento.strftime('%d/%m/%Y')}}#}
+{#                                <div class="task-menu">#}
+{#                                    <span class="visually-hidden" onclick="toggleMenu('{{ tarefa.id }}')"></span>#}
+{#                                        <div class="dropdown-menu" id="menu-{{ tarefa.id }}">#}
+{#                                            <a href="{{ url_for('edit_tarefa', tarefa_id=tarefa.id) }}">Editar</a>#}
+{#                                            <form action="{{ url_for('delete_tarefa', tarefa_id=tarefa.id) }}" method="post" style="display:inline;">#}
+{#                                                <button type="submit">Excluir</button>#}
+{#                                            </form>#}
+{#                                        </div>#}
+{#                                </div>#}
+{#                            </div>#}
+                            <!-- Large button groups (default and split) -->
+                            <div class="btn-group d-inline-flex p-2 " draggable="true" ondragstart="drag(event)" id="task-{{ tarefa.id }}">
+                              <button class="btn btn-secondary btn-lg" type="button">
+                                  {{ tarefa.descricao }} - Para {{ tarefa.data_vencimento.strftime('%d/%m/%Y')}}
+                              </button>
+                              <button type="button" class="btn btn-lg btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="visually-hidden">Toggle Dropdown</span>
+                              </button>
+                              <ul class="dropdown-menu">
+                                <a href="{{ url_for('edit_tarefa', tarefa_id=tarefa.id) }}">Editar</a>
+                                <form action="{{ url_for('delete_tarefa', tarefa_id=tarefa.id) }}" method="post" style="display:inline;">
+                                    <button type="submit">Excluir</button>
+                                </form>
+                              </ul>
+                            </div>
+                    {% endfor %}
+                </div>
+        </div>
+        <div class="column" id="em_andamento" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="column-title">Em Andamento</div>
+            <div class="dropzone">
+                {% for tarefa in tarefas if tarefa.status == 'em_andamento' %}
+                            <div class="btn-group d-inline-flex p-2 " draggable="true" ondragstart="drag(event)" id="task-{{ tarefa.id }}">
+                              <button class="btn btn-secondary btn-lg" type="button">
+                                  {{ tarefa.descricao }} - Para {{ tarefa.data_vencimento.strftime('%d/%m/%Y')}}
+                              </button>
+                              <button type="button" class="btn btn-lg btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="visually-hidden">Toggle Dropdown</span>
+                              </button>
+                              <ul class="dropdown-menu">
+                                <a href="{{ url_for('edit_tarefa', tarefa_id=tarefa.id) }}">Editar</a>
+                                <form action="{{ url_for('delete_tarefa', tarefa_id=tarefa.id) }}" method="post" style="display:inline;">
+                                    <button type="submit">Excluir</button>
+                                </form>
+                              </ul>
+                            </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="column" id="concluido" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="column-title">Concluído</div>
+            <div class="dropzone">
+                {% for tarefa in tarefas if tarefa.status == 'concluido' %}
+                    <div class="btn-group d-inline-flex p-2 " draggable="true" ondragstart="drag(event)" id="task-{{ tarefa.id }}">
+                      <button class="btn btn-secondary btn-lg" type="button">
+                          {{ tarefa.descricao }} - Para {{ tarefa.data_vencimento.strftime('%d/%m/%Y')}}
+                      </button>
+                      <button type="button d-inline-flex p-2 " class="btn btn-lg btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="visually-hidden">Toggle Dropdown</span>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <a href="{{ url_for('edit_tarefa', tarefa_id=tarefa.id) }}">Editar</a>
+                        <form action="{{ url_for('delete_tarefa', tarefa_id=tarefa.id) }}" method="post" style="display:inline;">
+                            <button type="submit">Excluir</button>
+                        </form>
+                      </ul>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <a href="{{ url_for('logout') }}"> sair</a>
+
+{% endblock %}

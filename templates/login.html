@@ -1,0 +1,22 @@
+{% extends 'template.html' %}
+{% block title %}Autenticação{% endblock %}
+
+{% block content %}
+    <h2>Login</h2>
+    <form method="POST" action="{{ url_for('login') }}">
+        <label for="username">Usuário:</label>
+        <input type="text" name="username" required ><br>
+        <label for="password">Senha:</label>
+        <input type="password" name="password" required ><br>
+        <input type="submit" value="Entrar">
+    </form>
+    <br>
+    <h2>Registro</h2>
+    <form method="POST" action="{{ url_for('register') }}">
+        <label for="username">Usuário:</label>
+        <input type="text" name="username" required><br>
+        <label for="password">Senha:</label>
+        <input type="password" name="password" required><br>
+        <input type="submit" value="Entrar">
+    </form>
+{% endblock %}

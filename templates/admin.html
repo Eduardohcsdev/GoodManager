@@ -1,0 +1,21 @@
+{% extends 'template.html' %}
+{% block content %}
+    <h1>Página de admin</h1>
+    <h2>usuários</h2>
+    {% if usuarios %}
+        <ul>
+        {% for usuario in usuarios %}
+            <li>ID: {{ usuario.id }}, Nome: {{ usuario.nome }} Senha: {{ usuario.senha }}</li>
+             <form action="{{ url_for('delete_user', user_id=usuario.id) }}" method="post" style="display:inline;">
+                    <button type="submit">Excluir</button>
+                </form>
+                            <form action="{{ url_for('edit_user', user_id=usuario.id) }}" method="get" style="display:inline;">
+                    <button type="submit">Editar</button>
+                </form>
+
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Nenhum usuário cadastrado.</p>
+    {% endif %}
+{% endblock %}
